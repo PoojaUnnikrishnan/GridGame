@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=\, initial-scale=1.0">
+    <title>Image puzzle</title>
+    <link rel="stylesheet" href="gridGame.css">
+    <!-- link html file with css  -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- To add jquery -->
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js" integrity="sha256-eTyxS0rkjpLEo16uXTS0uVCS4815lc40K2iVpWDvdSY=" crossorigin="anonymous"></script>
+    <!-- To add jquery ui(for events like droppable, draggable, sortable, resizable etc) -->
+    <style>
+     #puzzle{width: 600px;margin: auto;}
+        .piece{
+        background-image: url("images/nature.jpg");
+        /* Add image as a background to form a grid structure */
+        width: 150px;
+        height:150px;
+        float: left;
+        border: 1px solid silver;
+        box-sizing: border-box;
+        }
+        #piece1{ background-position: 0 0;}
+        #piece2{ background-position: -150px -0px;}
+        #piece3{ background-position: -300px -0px;}
+        #piece4{ background-position: -450px -0px;}
+        #piece5{ background-position: -0px -150px;}
+        #piece6{ background-position: -150px -150px;}
+        #piece7{ background-position: -300px -150px;}
+        #piece8{ background-position: -450px -150px;}
+        #piece9{ background-position: -0px -300px;}
+        #piece10{ background-position: -150px -300px;}
+        #piece11{ background-position: -300px -300px;}
+        #piece12{ background-position: -450px -300px;}
+        #piece13{ background-position: -0px -450px;}
+        #piece14{ background-position: -150px -450px;}
+        #piece15{ background-position: -300px -450px;}
+        #piece16{ background-position: -450px -450px;}
+        /* Divided into following div's and given position of each tile using background-position */
+   </style>
+</head>
+<body>
+    <h1 id="heading">IMAGE PUZZLE</h1>
+    <h1 style="position:absolute;top:0px;right:0px;padding:10px;" id="timer"></h1>
+    <!-- timer id is given to add timer  -->
+    <hr>
+    <div id="hints">
+        <p id="hint">RULES: Click on start button to shuffle the image and solve the puzzle. Rearrange the puzzle by dragging and dropping tiles to form a solved puzzle.
+
+        </p>
+    </div>
+    <hr>
+    <div class="imageDiv">
+        <img id="image" src="images/nature.jpg" alt="picture of nature">
+    </div>
+    <div id="puzzle" class="sortable">
+        <div id="piece1" class="piece"> </div>
+        <div id="piece2" class="piece"> </div>
+        <div id="piece3" class="piece"> </div>
+        <div id="piece4" class="piece"> </div>
+        <div id="piece5" class="piece"> </div>
+        <div id="piece6" class="piece"> </div>
+        <div id="piece7" class="piece"> </div>
+        <div id="piece8" class="piece"> </div>
+        <div id="piece9" class="piece"> </div>
+        <div id="piece10" class="piece"> </div>
+        <div id="piece11" class="piece"> </div>
+        <div id="piece12" class="piece"> </div>
+        <div id="piece13" class="piece"> </div>
+        <div id="piece14" class="piece"> </div>
+        <div id="piece15" class="piece"> </div>
+        <div id="piece16" class="piece"> </div>
+        <!-- divided into 16 pieces -->
+ <hr>       
+<div id="buttonAlign">
+    <button id='button' style='display:inline;' onclick="shuffle()">Start</button>
+</div>
+<!-- Given a start button to start the game -->
+<div id="message">
+</div>
+        <script>
+            var sec=0;
+            let timer;
+            function shuffle() {
+			// shuffle function is used to shuffle images inside grid 
+            let array = [1, 2, 3, 4, 5, 6, 7, 8, 9,10,11,12,13,14,15,16];
+            // For storing different pieces of image into a single array 
+            array.sort(function(a, b){return 0.5 - Math.random()});
+            // "array.sort" will sort the array in random order.
+            
+            $('#puzzle').html('');
+            for (var i = 0; i < array.length; i++) {
+                $( "#puzzle" ).append("<div id='piece"+array[i]+"' class='piece'></div>");
+            }
+
+            sec=0;
+            timer = setInterval(function(){ 
+            // to give timer 
+                sec=sec+1;
+                $( "#timer" ).html(sec);
+            }, 1000);
+        }
+
+        
+        $( ".sortable" ).sortable({connectWith: ".sortable"},
+        // sortable is used to sort the array to form original image.
+        {
+            update: function( event, ui ) {
+                countRight=0;
+                $("#puzzle > div").each((index, elem) => {
+                if('piece'+(index+1)==elem.id){
+                    countRight=countRight+1;
+                }
+                if(countRight==16){
+                    let solvedin=sec;
+                    sec=0;
+                    clearInterval(timer);
+                    $("#timer").html(sec);
+                    alert("You have solved the puzzle in "+solvedin+" seconds")               
+                    // to add final message that the user solved the puzzle
+                }        
+            });
+            }
+        });
+        </script>
+</body>
+</html>
