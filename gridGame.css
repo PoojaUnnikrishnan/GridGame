@@ -1,0 +1,29 @@
+/* Giving styling using css to classes and id's */
+#image {
+  float: right;
+  height: auto;
+  width: 400px;
+}
+#heading {
+  text-align: center;
+  color: #030303;
+}
+#button {
+  padding: 10px;
+  position: relative;
+  border: 2px solid black;
+  color: #131313;
+}
+#buttonAlign {
+  text-align: right;
+  margin: auto;
+  display: flex;
+  display: grid;
+}
+#hint {
+  text-align: center;
+  color: aliceblue;
+}
+#hints {
+  background-color: #030303;
+}
